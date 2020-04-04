@@ -26,7 +26,11 @@ urlpatterns = [
     
     path('', include('blog.urls')),
     path('register/', user_views.register, name='register'),
-    path('login/', auth_view.LoginView.as_view(template_name='users/login.html'), name='login'),
+    path('login/', 
+          auth_view.LoginView.as_view(
+            template_name='users/login.html', 
+            redirect_authenticated_user=True), 
+          name='login'),
     path('logout/', auth_view.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('password-reset/', 
           auth_view.PasswordResetView.as_view(template_name='users/password_reset.html'),
@@ -47,3 +51,11 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+from django.conf.urls import handler404, handler500
+from blog import views as blog_views
+
+
+handler404 = 'blog.views.handler404'
+handler500 = 'blog.views.handler500'
+

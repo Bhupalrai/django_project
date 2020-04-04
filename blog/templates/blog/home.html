@@ -1,18 +1,27 @@
 {% extends "blog/base.html" %}
 {% block content %}
-    {% for post in posts %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+    {% if not posts %}
+      <div class="content-section bg-info text-white">
+        <legend class="border-bottom mb-4">No posts are created yet!!!</legend>
+      </div>
+    {% else %}
+      {% for post in posts %}
+          <article class="media content-section">
+            <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+            <div class="media-body">
+              <div class="article-metadata">
+                <a class="mr-2" href="{% url 'user-posts' post.author.username %}">
+                  {{ post.author.first_name }}
+                  {{ post.author.last_name }}
+                </a>
+                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+              </div>
+              <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+              <p class="article-content">{{ post.content }}</p>
             </div>
-            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-          </div>
-        </article>
-    {% endfor %}
+          </article>
+        {% endfor %}
+      {% endif %}
 
     {% if is_paginated %}
 

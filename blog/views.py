@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.template import RequestContext
 
 from .models import Post
 
@@ -32,9 +33,13 @@ class UserPostListView(ListView):
     paginate_by = 3
 
     def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Post.objects.filter(author=user).order_by('-date_posted')
-
+        user = get_object_or_404(
+                    User, 
+                    username=self.kwargs.get('username')
+                )
+        posts = Post.objects.filter(author=user).order_by('-date_posted')   
+        return posts
+    
 
 class PostDetailView(DetailView):
     model = Post
@@ -77,3 +82,11 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
+
+
+def handler404(request, exception):
+    return render(request, 'blog/404.html')
+
+
+def handler500(request):
+    return render(request, 'blog/500.html')
