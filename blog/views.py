@@ -30,7 +30,7 @@ class PostListView(ListView):
             post_results = Post.objects.filter(
                 Q(title__icontains=query) |
                 Q(content__icontains=query)
-            )
+            ).order_by('-date_posted')
             return post_results
         return Post.objects.all()
 
@@ -40,7 +40,6 @@ class UserPostListView(ListView):
     template_name = 'blog/user_posts.html' # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
     ordering = ['-date_posted']
-
     paginate_by = 3
 
     def get_queryset(self):
@@ -48,7 +47,7 @@ class UserPostListView(ListView):
                     User, 
                     username=self.kwargs.get('username')
                 )
-        posts = Post.objects.filter(author=user).order_by('-date_posted')   
+        posts = Post.objects.filter(author=user)   
         return posts
     
 
