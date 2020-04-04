@@ -23,6 +23,17 @@ class PostListView(ListView):
 
     paginate_by = 3
 
+    def get_queryset(self):
+        from django.db.models import Q
+        query = self.request.GET.get("search")
+        if query:
+            post_results = Post.objects.filter(
+                Q(title__icontains=query) |
+                Q(content__icontains=query)
+            )
+            return post_results
+        return Post.objects.all()
+
 
 class UserPostListView(ListView):
     model = Post # query Post model in order to create list view
