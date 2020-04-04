@@ -14,7 +14,7 @@ def home(request):
     }
     return render(request, 'blog/home.html', context)
 
-# class based view
+# class based view 
 class PostListView(ListView):
     model = Post # query Post model in order to create list view
     template_name = 'blog/home.html' # <app>/<model>_<viewtype>.html

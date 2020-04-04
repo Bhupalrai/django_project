@@ -5180,3 +5180,11 @@ Watching for file changes with StatReloader
 "GET /?search=Science HTTP/1.1" 200 4307
 "GET /?search=science HTTP/1.1" 200 4307
 "GET / HTTP/1.1" 200 5875
+C:\Users\bhupal\Desktop\project\django_project\blog\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\bhupal\Desktop\project\django_project\blog\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\bhupal\Desktop\project\django_project\blog\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\bhupal\Desktop\project\django_project\blog\views.py changed, reloading.
+Watching for file changes with StatReloader
